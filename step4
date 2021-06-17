@@ -45,6 +45,11 @@ def draw(canvas):
     # update ball
     # doris- start
     # (wrong) ball_pos = ball_pos + ball_vel # update ball position
+    if (ball_pos[1]-BALL_RADIUS <= 0): # bounce top wall? 
+        ball_vel[1]=-ball_vel[1]
+    elif (ball_pos[1]+BALL_RADIUS >= HEIGHT): #bounce bottom wall?
+        ball_vel[1]=-ball_vel[1]    
+    
     ball_pos[0] = ball_pos[0] + ball_vel[0]
     ball_pos[1] = ball_pos[1] + ball_vel[1]
     # doris- end
