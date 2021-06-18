@@ -63,7 +63,9 @@ def draw(canvas):
     canvas.draw_line([PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1, "White")
     canvas.draw_line([WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1, "White")
         
+    ##############
     # update ball
+    ##############
     # doris- start
     # (wrong) ball_pos = ball_pos + ball_vel # update ball position
     if (ball_pos[1]-BALL_RADIUS <= 0): # bounce top wall? 
@@ -71,19 +73,23 @@ def draw(canvas):
     elif (ball_pos[1]+BALL_RADIUS >= HEIGHT): #bounce bottom wall?
         ball_vel[1]=-ball_vel[1]    
         
-    if (ball_pos[0]-BALL_RADIUS <= PAD_WIDTH): # touch left wall? 
-        spawn_ball(1) # direction = RIGHT
-    elif (ball_pos[0]+BALL_RADIUS >= WIDTH-PAD_WIDTH): # touch right wall?
-        spawn_ball(0) # direction = LEFT
+    #step11 if (ball_pos[0]-BALL_RADIUS <= PAD_WIDTH): # touch left wall? 
+    #step11    spawn_ball(1) # direction = RIGHT
+    #step11elif (ball_pos[0]+BALL_RADIUS >= WIDTH-PAD_WIDTH): # touch right wall?
+    #step11    spawn_ball(0) # direction = LEFT
     
     ball_pos[0] = ball_pos[0] + ball_vel[0]
     ball_pos[1] = ball_pos[1] + ball_vel[1]
     # doris- end
             
+    #############        
     # draw ball
+    #############
     canvas.draw_circle(ball_pos, BALL_RADIUS, 0.1, "Yellow", "Yellow") # doris- draw the ball
     
+    ################################################################
     # update paddle's vertical position, keep paddle on the screen
+    ################################################################
     # doris -start step9
     #print "paddle1_pos", paddle1_pos
     #print "paddle2_pos", paddle2_pos
@@ -110,8 +116,9 @@ def draw(canvas):
         paddle2_pos += paddle2_vel
     # doris -end
     
+    ###############
     # draw paddles
-    
+    ###############    
     # doris-start step#7
     # WRONG canvas.draw_line([WIDTH-PAD_WIDTH, paddle1_pos], [WIDTH, paddle1_pos], [WIDTH, paddle1_pos+PAD_HEIGHT],[WIDTH-PAD_WIDTH, paddle1_pos+PAD_HEIGHT]) # right paddle
     # WRONG canvas.draw_line([0, paddle2_pos], [PAD_WIDTH, paddle2_pos], [PAD_WIDTH, paddle2_pos+PAD_HEIGHT],[0, paddle2_pos+PAD_HEIGHT]) # left paddle
@@ -119,9 +126,26 @@ def draw(canvas):
     canvas.draw_polygon([(0, paddle2_pos), (PAD_WIDTH, paddle2_pos), (PAD_WIDTH, paddle2_pos+PAD_HEIGHT),(0, paddle2_pos+PAD_HEIGHT)], 1, 'Yellow','Yellow') # left paddle
     # doris-end 
     
-    # determine whether paddle and ball collide    
+    ############################################
+    # determine whether paddle and ball collide 
+    ############################################
+    # doris-start step11
+    if ball_pos[0]-BALL_RADIUS <= PAD_WIDTH: #touch left wall?
+        if ball_pos[1] >= paddle2_pos and ball_pos[1] <= paddle2_pos + PAD_HEIGHT:
+            ball_vel[0] = - ball_vel[0] 
+        elif ball_pos[1] < paddle2_pos or ball_pos[1]> paddle2_pos + PAD_HEIGHT:
+            new_game()
+            
+    if ball_pos[0]+BALL_RADIUS >= WIDTH-PAD_WIDTH: #touch right wall?
+        if ball_pos[1] > paddle1_pos and ball_pos[1] < paddle1_pos+ PAD_HEIGHT:
+            ball_vel[0] = - ball_vel[0] 
+        elif ball_pos[1] < paddle1_pos or ball_pos[1]> paddle1_pos + PAD_HEIGHT:
+            new_game()           
+    # doris-end
     
+    ###############
     # draw scores
+    ###############
         
 def keydown(key):
     global paddle1_vel, paddle2_vel
