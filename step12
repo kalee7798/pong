@@ -132,13 +132,15 @@ def draw(canvas):
     # doris-start step11
     if ball_pos[0]-BALL_RADIUS <= PAD_WIDTH: #touch left wall?
         if ball_pos[1] >= paddle2_pos and ball_pos[1] <= paddle2_pos + PAD_HEIGHT:
-            ball_vel[0] = - ball_vel[0] 
+            ball_vel[0] = - ball_vel[0]*1.1
+            ball_vel[1] = ball_vel[1]*1.1
         elif ball_pos[1] < paddle2_pos or ball_pos[1]> paddle2_pos + PAD_HEIGHT:
             new_game()
             
     if ball_pos[0]+BALL_RADIUS >= WIDTH-PAD_WIDTH: #touch right wall?
         if ball_pos[1] > paddle1_pos and ball_pos[1] < paddle1_pos+ PAD_HEIGHT:
-            ball_vel[0] = - ball_vel[0] 
+            ball_vel[0] = - ball_vel[0]*1.1
+            ball_vel[1] = ball_vel[1]*1.1
         elif ball_pos[1] < paddle1_pos or ball_pos[1]> paddle1_pos + PAD_HEIGHT:
             new_game()           
     # doris-end
